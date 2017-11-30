@@ -33,9 +33,12 @@ public class Manager {
 	public void findHuman(int juminNum) {
 		for (int i = 0; i < alist.size(); i++) {
 			if (alist.get(i).getJumin() == juminNum) {
-				System.out.println("등록되어있습니다.");
+				System.out.println("해당 인원이 다음과 같이 등록되어있습니다.");
 				alist.get(i).showInfo();			
 				
+			}else{
+				System.out.println("해당 인원을 검색할 수 없습니다.");
+				System.out.println("주민등록 번호가 잘못 입력 되었거나 등록되어 있지 않습니다.");
 			}
 		}
 		return;
