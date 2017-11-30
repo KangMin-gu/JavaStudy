@@ -1,0 +1,77 @@
+oracle xe version  자바 객체를 저장할순없음. 
+oracle에서 다루는유형: 숫자(number) 문자(string) 날짜(date) 파일(file-저장할수 있지만 안함.)
+소통방식:웹브라우저에서 등록한 정보 -> 자바어플리케이션으로 읽어내서 -> 오라클저장
+	 웹브라우저 목록 요청 -> 자바어플리케이션 에서 DB 목록 찾아서 html형식으로 출력
+정보마다 table(표)를 만들어서 data 관리를 한다. 각 table마다 이름을 지어줘야한다.
+
+[table 구상]
+member(tablename)
+{[num(column name)  numbertype(data type)][name stringtype][addr stringtype]}
+테이블 이름 정하기 -> 칼럼의 갯수 -> 칼럼의 이름 -> 칼럼속 데이타 타입->만들기
+
+정보를 저장할때마다 table의 row가 추가되어 그 속에저장하여 관리됨.(RDBMS관계형database)
+
+[oracle과 대화(사용법)]
+cmd 
+sqlplus
+사용자명 system
+암호 oracle -오라클 설치시 입력한 비밀번호 (sqlplus system/oracle 이렇게 해도 접속됨.)
+CREATE USER scott IDENTIFIED BY tiger; - scott 사용자계정이 만들어짐 비밀번호는 tiger
+Grant connect,resource TO scott; 접속권한connect 과 자원resource 을 사용자에게 권한을 부여 
+conn scott/tiger -scott계정으로 연결
+
+table 만들기
+
+테이블 생성: CREATE TABLE member(num NUMBER, name VARCHAR(10), addr VARCHAR2(20));
+-테이블명 member 칼럼은 3개로 구성 칼럼의 이름은 num name addr 각 타입은 NUMBER-(숫자) VARCHAR2(최대글자수)-(문자)
+
+
+테이블이 잘 생성됬는지 확인: DESC member(테이블명)
+
+데이터저장방법: INSERT INTO member (num,name,addr) VALUES(1,'김구라','노량진);
+
+데이터 불러오기 : SELECT name,addr FROM member; - SELECT 검색할칼럼명 FROM 테이블명;
+
+데이터 삭제 : DELETE FROM 테이블명 WHERE 칼럼이름=값; 2번째로우 삭제
+
+데이터 번호로 삭제 : DELETE FROM member WHERE num=2; 2번째로우 삭제 
+
+데이터 이름으로 삭제  : DELET FROM member WHERE name='김구라'; 김구라row 삭제
+
+데이터 주소로 삭제 : DELET FROM member WHERE addr='종로'; 종로 row 삭제 
+
+데이터 수정 : UPDATE member SET name='이정호' WHERE num=5;
+
+데이터 수정 : UPDATE 테이블명 SET 칼럼이름='수정값' WHERE 조건자; 조건자는 같은 row의 칼럼이름과 값
+
+CREATE TABLE member(num NUMBER PRIMARY KEY, name VARCHAR2(10), addr VARCHAR2(20));
+ PRIMARY KEY는 num을 특정한 키값으로 사용하겠다라는 선언(특정 값이 겹치지않게)
+
+DROP table : 테이블 전체 삭제
+
+CREATE * from member; : 전체테이블 호출
+
+commit; : 입력 , 수정, 삭제  commit 명령을해야 수정적용됨
+
+------------
+
+ojdbc6.jar jre/jdk -> lib -> ext 두곳의 파일안에 복사
+
+preparedStatement(select,insert,delete,update 수행명령문을 변수에 담고) 가 
+connection(연결통로)을 통해 oracle DATAbase 에가서 검색하여 정보를 가지고 돌아와서 
+resultset(select에만 해당 가져온 정보를 보여줘야하기에)에 출력한다.
+
+		java application
+ ___________________		______________		_________________
+|preparedStatement  |   ->  | connection |	->	|Oracle DATabase|
+|(select)	   		|	<-	|____________|  <-	|_______________|	
+|___________________|
+
+	↓
+___________________
+|    resultset     |
+|__________________|
+
+
+
+
