@@ -7,7 +7,7 @@ public class MainClass08 {
 	public static void main(String[] args) {
 
 		// 아래의 정보를 DB에 저장하려면?
-		int num = 99;
+		int num = 999;
 		String name = "누구게";
 		String addr = "어디게";
 
