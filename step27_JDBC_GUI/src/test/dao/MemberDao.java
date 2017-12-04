@@ -44,12 +44,11 @@ public class MemberDao {
 		try {
 			conn = new DBConnect().getConn();
 			// 실행할 sql 문
-			String sql = "INSERT INTO member  (num,name,addr)" + "VALUES (?,?,?)";
+			String sql = "INSERT INTO member  (num,name,addr)" + "VALUES (member_seq.nextval,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값 바인딩하기
-			pstmt.setInt(1, dto.getNum());
-			pstmt.setString(2, dto.getName());
-			pstmt.setString(3, dto.getAddr());
+			pstmt.setString(1, dto.getName());
+			pstmt.setString(2, dto.getAddr());
 			// sql 문 수행하고 추가된 row 의 갯수 얻어오기
 			int flag = pstmt.executeUpdate();
 			if (flag > 0) {// 작업 성공이면
@@ -182,48 +181,6 @@ public class MemberDao {
 		return null;
 	}
 
-	//인자로 전달되는 번호에 해당하는 회원정보를 리턴해주는 메소드
-	public MemberDto getData(int num) {
-		Connection conn=null;
-		//필요한 객체를 담을 변수 만들기 
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		//MemberDto 객체의 참조값을 담을 변수 만들기 
-		MemberDto dto=null;
-		try{
-			conn=new DBConnect().getConn();
-			//실행할 sql 문 준비 
-			String sql="SELECT name, addr FROM member "
-					+ "WHERE num=?";
-			//PreparedStatement 객체의 참조값 얻어오기
-			//(sql 문을 대신 수행해줄 객체)
-			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, num);
-			//ResultSet 객체의 참조값 얻어오기 
-			//(SELECT 문의 수행 결과 값을 가지고 있는 객체)
-			rs=pstmt.executeQuery();
-			
-			if(rs.next()){//커서를 한칸 내려서
-				//커서가 위치한 곳에서 회원 정보를 얻어온다.  
-				String name=rs.getString("name");
-				String addr=rs.getString("addr");
-				//MemberDto 객체에 담는다.
-				dto=new MemberDto(num, name, addr);
-				//dto.setNum(num);
-				//dto.setName(name);
-				//dto.setAddr(addr);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			try{
-				if(rs!=null)rs.close();
-				if(pstmt!=null)pstmt.close();
-				if(conn!=null)conn.close();
-			}catch(Exception e){}
-		}//try
-		
-		return dto;
 
-	}
+
 }

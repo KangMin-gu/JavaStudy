@@ -73,5 +73,17 @@ ___________________
 |__________________|
 
 
+create sequence test_seq; 시퀀스 차례대로 자동으로 연속된숫자 반영한다.
+create sequence 시퀀스이름 
 
+시퀀스이름 . NEXTVAL 
+select test_seq.nextVal from dual; 한번 해석할때마다 1씩 증가하는 값을 리턴한다.
+
+select num,name,addr, test_seq.nextval from member; 한번 해석할때마다 1씩 증가하는 값을 리턴한다.
+select mae,test_seq.nextval from member; 한번 해석할때마다 1씩 증가하는 값을 리턴한다.
+
+insert into member (num, name, addr) values (test_seq.nextval,'ㅁ','ㅠ'); 
+넘버자리에 시퀀스명령문을 넣어줌으로써 자동으로 1증가하는 num이붙는다.
+
+drop sequence 시퀀스이름  시퀀스 삭제.
 
