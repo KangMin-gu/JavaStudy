@@ -136,6 +136,7 @@ public class MemberDao {
 	}
 
 	// DB 에 회원 목록을 리턴해주는 메소드
+	// Vector은 ArryaList보다 기능추가로 무거운 객체 기능은 거의같다.메소드도 똑같이 사용한다.
 	public List<MemberDto> getList() {
 		List<MemberDto> alist = new ArrayList<>();
 		Connection conn = null;
@@ -146,7 +147,7 @@ public class MemberDao {
 		try {
 			conn = new DBConnect().getConn();
 			// 실행할 sql 문
-			String sql = "Select num, name, addr From member";
+			String sql = "Select * From member";
 			pstmt = conn.prepareStatement(sql);
 
 			rs = pstmt.executeQuery();
@@ -178,9 +179,7 @@ public class MemberDao {
 			} catch (Exception e) {
 			}
 		}
-		return null;
+		return alist;
 	}
-
-
 
 }

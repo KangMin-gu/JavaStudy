@@ -87,3 +87,4 @@ insert into member (num, name, addr) values (test_seq.nextval,'ㅁ','ㅠ');
 
 drop sequence 시퀀스이름  시퀀스 삭제.
 
+order by num desc 내림차순정리
