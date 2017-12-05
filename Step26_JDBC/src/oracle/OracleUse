@@ -88,3 +88,67 @@ insert into member (num, name, addr) values (test_seq.nextval,'ㅁ','ㅠ');
 drop sequence 시퀀스이름  시퀀스 삭제.
 
 order by num desc 내림차순정리
+--------------------------------------------------------------------------------------
+C:\oraclexe\app\oracle\product\10.2.0\server\RDBMS\ADMIN
+scott.sql
+commnad scott login -> @ -> scott.sql drag 
+
+desc emp(사원테이블)
+
+select ename from emp;
+
+emp(사원 테이블)
+
+empno => 사원번호
+ename => 사원이름
+job => 직책
+mgr => 매니저의 사번(직속상관의 사원번호)
+hiredate => 입사일 
+sal -> 급여
+comm => 성과급(보너스)
+deptno => 부서번호
+
+실행순서
+	5 select 칼럼1,칼럼2
+	1 from 테이블명
+	2 where 조건
+	3 group by 칼럼명
+	4 having 조건
+	6 order by 칼러명 desc내림차순 asc 오름차순 정렬
+	
+1. emp 테이블에서 사원번호, 사원이름, 직업을 출력해 보세요.
+
+select empno,ename, job from emp;
+
+2. emp 테이블에서 사원번호, 급여, 부서번호를 출력해보세요. 단, 급여가 많은 순서대로 출력
+select empno, sal, deptno from emp order by sal desc;
+
+3.emp 테이블에서 사원번호, 급여, 입사일을 출력해보세요.
+단 급엽가 적은 순서대로 출력
+
+select empno,sal, hiredate from emp order by sal asc;
+
+4.emp 테이블에서 직업, 급여를 출력해 보세요.
+단, 직업명으로 오름차순, 급여로 내림차순
+
+select job, sal from emp oder by job asc, sal desc; 
+먼저기술한것을 실행
+
+5. 급여가 2000 이상인 사원의 사원번호, 이름, 급여를 출력하기
+
+select empno, ename, sal from emp where sal>=2000; 
+
+6. emp 테이블에서 부서번확 10번인 사원들의 모든 정보를 출력
+
+select * from emp where deptno=10;
+
+7. emp 테이블에서 입사일이 '81/02/20' 인 사원의 사원번호, 이름, 입사일을 출력해 보세요.
+select empno, ename, hiredate from emp where hiredate='81/02/20';
+
+8.emp 테이블에서 직업이 'salesman' 인 사원의 이름, 직업, 급여를 출력해보세요.
+단, 급여가 높은 순서대로
+select ename, job, sal from emp  where job='salesman' order by sal desc;
+
+
+
+

@@ -18,6 +18,7 @@ import test.util.DBConnect;
  *   - Application 전역에서 MemberDao 객체는 오직 1개만 
  *    생성될수 있도록 설계한다.
  */
+//---------------------싱글톤 DAO------------------------------------------
 public class MemberDao {
 	// 1. 자신의 참조값을 담을 private static 필드 만들기
 	private static MemberDao dao;
@@ -34,7 +35,7 @@ public class MemberDao {
 		}
 		return dao;
 	}
-
+//-------------------------------------------------------------
 	// DB 에 회원 정보를 저장하는 메소드
 	public boolean insert(MemberDto dto) {
 		Connection conn = null;

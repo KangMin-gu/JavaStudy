@@ -9,6 +9,7 @@ import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,7 +23,10 @@ public class MemberFrame extends JFrame implements ActionListener {
 	// 맴버필드 정의하기
 	JTextField inputNum, inputName, inputAddr;
 	JButton saveBtn, deleteBtn, updateBtn;
+	// 테이블모델
 	DefaultTableModel model = null;
+	// 테이블의 참조값을 저장할 필드
+	JTable table;
 
 	// 생성자
 	public MemberFrame() {
@@ -75,19 +79,19 @@ public class MemberFrame extends JFrame implements ActionListener {
 
 		// 프레임의 상단에 페널 배치하기
 		add(topPanel, BorderLayout.NORTH);
-//------------- 테이블 만들기 -----------
+		// ------------- 테이블 만들기 -----------
 		// 테이블 칼럼 명을 String[] 에 담는다.
 		String[] colNames = { "번호", "이름", "주소" };
 		// 기본 테이블 모델 객체 생성
 		model = new DefaultTableModel(colNames, 0);
 		// JTable 객체 생성
-		JTable table = new JTable();
+		table = new JTable();
 		table.setModel(model);
 		// 스크롤 가능한 패널 객체
 		JScrollPane sPanel = new JScrollPane(table);
-		//페널을 프레임의 가운데에 배치
+		// 페널을 프레임의 가운데에 배치
 		add(sPanel, BorderLayout.CENTER);
-//------------- 테이블 만들기 -----------
+		// ------------- 테이블 만들기 -----------
 		// 프레임의 위치와 크기 설정
 		setBounds(200, 200, 800, 500);
 		// 보이도록 설정
@@ -123,10 +127,41 @@ public class MemberFrame extends JFrame implements ActionListener {
 			MemberDao dao = MemberDao.getInstance();
 			dao.insert(dto);
 
-		} else if (command.equals("delete")) {
+		} else if (command.equals("delete")) { // 삭제버튼 눌렀을때
+			// 예, 아니요, 취소버튼 생성 어떤 버튼을 눌렀는지 정보가
+			// int, type으로 리턴된다.
+			int result = JOptionPane.showConfirmDialog(this, "진짜 삭제할껴?");
+			// 예 버튼을 누르지 않았다면 YES_OPTIONE=0
+			if (result != JOptionPane.YES_OPTION) {
+				return;// 메소드 종료.
+			}
+			// 선택된 row의 인덱스를 읽어온다.
+			int selectedIndex = table.getSelectedRow();
+			if (selectedIndex == -1) {
+				JOptionPane.showMessageDialog(this, "삭제할 row를 선택하세요");
+				return;// 메소드 종료
+			}
+			// 삭제할 row에 있는 회원 번호를 읽어온다.
+			int num = (int) table.getValueAt(selectedIndex, 0);
+			// DB 에서 해당 회원정보를 삭제한다.
+			MemberDao dao = MemberDao.getInstance();
+			dao.delete(num);
 
 		} else if (command.equals("update")) {
-
+			// 선택된 row의 인덱스를 읽어온다.
+			int selectedIndex = table.getSelectedRow();
+			if (selectedIndex == -1) {
+				JOptionPane.showMessageDialog(this, "수정할 row를 선택하세요");
+				return;// 메소드 종료
+			}
+			int num = (int) table.getValueAt(selectedIndex, 0);
+			String name = (String) table.getValueAt(selectedIndex, 1);
+			String addr = (String) table.getValueAt(selectedIndex, 2);
+			// MemberDto 객체에 담고
+			MemberDto dto = new MemberDto(num, name, addr);
+			// DB 에 수정 반영한다.
+			MemberDao.getInstance().update(dto);
+			JOptionPane.showMessageDialog(this, "수정하였습니다.");
 		}
 		// 회원정보 다시 출력
 		displayMember();
@@ -142,8 +177,7 @@ public class MemberFrame extends JFrame implements ActionListener {
 		// 테이블의 내용을 지우고
 		model.setRowCount(0);
 		// 다시 출력
-		for (MemberDto tmp : list) {//반복문돌면서
-			
+		for (MemberDto tmp : list) {// 반복문돌면서
 			Object[] rowData = { tmp.getNum(), tmp.getName(), tmp.getAddr() };
 			model.addRow(rowData);// row 추가
 		}

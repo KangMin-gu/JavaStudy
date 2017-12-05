@@ -44,7 +44,8 @@ public class MemberDao {
 		try {
 			conn = new DBConnect().getConn();
 			// 실행할 sql 문
-			String sql = "INSERT INTO member  (num,name,addr)" + "VALUES (member_seq.nextval,?,?)";
+			String sql = "INSERT INTO member  (num,name,addr)"
+							+ "VALUES (member_seq.nextval,?,?) oder by num desc";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값 바인딩하기
 			pstmt.setString(1, dto.getName());
