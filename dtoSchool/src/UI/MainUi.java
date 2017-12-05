@@ -28,7 +28,7 @@ public class MainUi {
 	public void view() {
 		System.out.println("--------------------------------");
 		System.out.println("에이콘 학원");
-		System.out.println("1.등록   2.삭제  3.검색  4.수정 5.전체보기");
+		System.out.println("1.등록   2.삭제  3.검색  4.수정 5.전체보기 6.파일로출력하기 7.파일읽어오기");
 		System.out.println("--------------------------------");
 
 		sc = new Scanner(System.in); // 스캐너 객체 생성
@@ -45,6 +45,10 @@ public class MainUi {
 			setStdN();
 		} else if (num == 5) {
 			showInfo();
+		} else if (num == 6) {
+			saveStdn();	
+		} else if (num == 7) {
+			readshow();
 		} else {
 			System.out.println("잘못입력했어요");
 			view();
@@ -106,6 +110,16 @@ public class MainUi {
 	// 전체보기
 	public void showInfo() {
 		mg.show();
+		view();
+	}
+	
+	public void saveStdn() {
+		mg.save();
+		view();
+	}
+	
+	public void readshow() {
+		mg.read();
 		view();
 	}
 

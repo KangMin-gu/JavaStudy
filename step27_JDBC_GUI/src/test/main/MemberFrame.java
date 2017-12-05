@@ -75,7 +75,7 @@ public class MemberFrame extends JFrame implements ActionListener {
 
 		// 프레임의 상단에 페널 배치하기
 		add(topPanel, BorderLayout.NORTH);
-
+//------------- 테이블 만들기 -----------
 		// 테이블 칼럼 명을 String[] 에 담는다.
 		String[] colNames = { "번호", "이름", "주소" };
 		// 기본 테이블 모델 객체 생성
@@ -85,9 +85,9 @@ public class MemberFrame extends JFrame implements ActionListener {
 		table.setModel(model);
 		// 스크롤 가능한 패널 객체
 		JScrollPane sPanel = new JScrollPane(table);
-
+		//페널을 프레임의 가운데에 배치
 		add(sPanel, BorderLayout.CENTER);
-
+//------------- 테이블 만들기 -----------
 		// 프레임의 위치와 크기 설정
 		setBounds(200, 200, 800, 500);
 		// 보이도록 설정
@@ -142,7 +142,8 @@ public class MemberFrame extends JFrame implements ActionListener {
 		// 테이블의 내용을 지우고
 		model.setRowCount(0);
 		// 다시 출력
-		for (MemberDto tmp : list) {
+		for (MemberDto tmp : list) {//반복문돌면서
+			
 			Object[] rowData = { tmp.getNum(), tmp.getName(), tmp.getAddr() };
 			model.addRow(rowData);// row 추가
 		}
