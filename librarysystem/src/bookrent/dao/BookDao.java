@@ -57,6 +57,8 @@ public class BookDao {
 			int flag = pstmt.executeUpdate();
 			if (flag > 0) {
 				isSuccess = true;
+				
+			System.out.println("도서가 등록 되었습니다.");	
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

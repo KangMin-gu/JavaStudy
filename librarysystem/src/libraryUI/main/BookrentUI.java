@@ -18,7 +18,6 @@ public class BookrentUI {
 	public int rentalFee;
 	public BookDao dao;
 
-
 	public BookrentUI() {
 		dao = BookDao.getInstance();
 		view();
@@ -34,46 +33,38 @@ public class BookrentUI {
 		num = sc.nextInt();
 
 		if (num == 1) {
-			entry();
-		}else if(num==2) {
+			entry(); 
+		} else if (num == 2) {
 			
-		}else if(num==3) {
-			
-		}else if(num==4) {
-			
-		}else {
-			
+		} else if (num == 3) {
+
+		} else if (num == 4) {
+
+		} else {
+
 		}
 	}
 
 	public void entry() {
 		System.out.println("장르: ");
-		genre=sc.next();
-		
+		genre = sc.next();
 		System.out.println("책제목: ");
-		bkname=sc.next();
-		
+		bkname = sc.next();
 		System.out.println("저자: ");
-		writer=sc.next();
-		
+		writer = sc.next();
 		System.out.println("출판사: ");
-		publisher=sc.next();
-		
+		publisher = sc.next();
 		System.out.println("ISBN: ");
-		isbn=sc.nextInt();
-		
+		isbn = sc.nextInt();
 		System.out.println("소비자가격: ");
-		price=sc.nextInt();
-		
-		rentalFee = (int) (price * 0.1) ;
-		
+		price = sc.nextInt();
+		rentalFee = (int) (price * 0.1);
 		BookDto dto = new BookDto(isbn, genre, bkname, writer, publisher, price, rentalFee);
 		dao.bkinsert(dto);
+		view();
 	}
 
 	public static void main(String[] args) {
-		new BookrentUI();		
+		new BookrentUI();
 	}
 }
-
-
