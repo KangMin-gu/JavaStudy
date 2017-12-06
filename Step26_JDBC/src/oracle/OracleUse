@@ -329,3 +329,46 @@ select deptno, avg(sal)
 from emp
 where sal<>
 그룹을 주고 그룹에대한 조건절 having avg(sal)->2000;
+
+
+Join
+
+emp, dept 테이블을 이용해서 사원의 이름, 부서번호, 부서명을 출력하기 
+
+emp. dept 테이블을 이용해서 다음과 같이 select 해 보세요.
+SMITH 는 research 부서에서 근무합니다. 
+allen 는 sales 부서에서 근무합니다.
+ward 는 sales 부서에서 근무합니다
+
+select ename, dname from emp, dept where emp.deptno = dept.deptno;
+
+
+self join 같은 테이블 안에 정보를 찾을때.
+
+
+ansi 조인
+
+-부서명이 'ACCOUNTING' 인 사원의 이름, 입사일, 부서번호, 부서명 을 출력해 보세요.
+
+select ename, hiredate, emp.deptno, dname
+from emp, dept
+where emp.deptno = dept.deptno and
+dname='ACCOUNTING'
+
+안시조인으로 바ㄲㅜ
+select ename, hiredate, emp.deptno, dname
+from emp 
+inner join dept on emp.deptno = dept.deptno
+where dname='ACCOUNTING';
+
+
+select ename, hiredate, e.deptno, dname
+from emp e
+inner join dept d on e.deptno = d.deptno
+where dname='ACCOUNTING';
+
+조인조건의 칼럼명이 같다면
+select ename, hiredate, deptno, dname
+from emp 
+inner join dept USING(deptno)
+where dname='ACCOUNTING';
