@@ -81,7 +81,7 @@ public class Manager {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("student.dat"));
 		
-			oos.writeObject(alist);
+			oos.writeObject((alist).toString().getBytes());
 			
 			oos.close();
 		} catch (IOException e) {
