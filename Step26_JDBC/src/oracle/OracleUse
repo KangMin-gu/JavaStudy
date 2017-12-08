@@ -372,3 +372,34 @@ select ename, hiredate, deptno, dname
 from emp 
 inner join dept USING(deptno)
 where dname='ACCOUNTING';
+
+
+GROUP으로 묶고 그룹중에 추려낼려면 조건절 HAVING
+
+ALL 조건이 전부커야하고
+
+ANY 조건이 하나만 크면 됨 
+
+where 절은 추려내겟다.
+
+select -> 임시로존재하는 테이블을 생성해낸다.	 select 하면 rownum 이라는 번호를 oracle에서 부여한다.
+
+emp 테이블에서 
+1.ename 으로 오름차순 정렬
+2.rownum 을 부여한다.
+3.위에서 부여된 rownum 을 이용해서 select 한다.
+
+select ename, job, r
+from (select ename, job, rownum as r  
+from (select ename, job from emp order by ename asc))
+where r between 6 and 10;
+
+
+create table dept2
+(deptno number(2) constraint dept_deptno_pk primary key, //constraint+ 제약조건이름짓기 + primary key
+dname varchar2(15) default '영업부', //값이없으면 영업부라 표시
+loc char(5) constraint dept2_loc_ck 
+check(loc in('seoul', 'busan', 'suwon'))); //서울,부산,수원만 들어갈수잇음.
+
+insert into dept2 (deptno, dname, loc)
+values (10, '총무부', 'seoul');
